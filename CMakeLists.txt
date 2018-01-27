@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.3)
 
+option(STDEXT_PATH_BUILD_TEST "Build GTests" OFF)
+if(STDEXT_PATH_BUILD_TEST)
+  include(cmake/hunter.cmake) # GTest package
+endif()
+
 project(stdext-path VERSION 0.0.0)
 
 add_library(stdext-path INTERFACE)
@@ -13,6 +18,11 @@ target_include_directories(
   INTERFACE
   "$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>"
 )
+
+if(STDEXT_PATH_BUILD_TEST)
+  enable_testing()  
+  add_subdirectory(test)
+endif()
 
 # Installation (https://github.com/forexample/package-example) {
 
